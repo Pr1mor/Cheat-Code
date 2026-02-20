@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "@google/genai": "^1.42.0",
-    "express": "^5.2.1"
-  },
-  "overrides": {
-  "minimatch": "^10.2.1"
-}
-}
