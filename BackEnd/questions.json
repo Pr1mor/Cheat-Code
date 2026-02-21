@@ -19,5 +19,47 @@
 		"difficulty": "Easy",
 		"description": "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.",
 		"optimal_approach": "Use a Hash Set. Iterate through the array and add elements to the set. If an element is already in the set, return true. O(n) time and O(n) space."
+	},
+	{
+		"id": 4,
+		"title": "3Sum",
+		"difficulty": "Medium",
+		"description": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.",
+		"optimalApproach": "The candidate should first sort the array. Then, they should iterate through the array, fixing one number and using a Two-Pointer approach (left and right pointers) on the remaining elements to find pairs that sum to the negative of the fixed number. Ensure they skip duplicate values to avoid duplicate triplets. Target Time Complexity: O(N^2). Target Space Complexity: O(1) or O(N) depending on the sorting algorithm."
+	},
+	{
+		"id": 5,
+		"title": "Longest Substring Without Repeating Characters",
+		"difficulty": "Medium",
+		"description": "Given a string s, find the length of the longest substring without repeating characters.",
+		"optimalApproach": "The candidate should use a Sliding Window approach. They should maintain two pointers (left and right) and a Hash Set or Hash Map to track characters currently in the window. As the right pointer expands, if a duplicate is found, the left pointer must shrink the window until the duplicate is removed. Target Time Complexity: O(N). Target Space Complexity: O(min(N, M)) where M is the character set."
+	},
+	{
+		"id": 6,
+		"title": "Add Two Numbers",
+		"difficulty": "Medium",
+		"description": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.",
+		"optimalApproach": "The candidate needs to iterate through both linked lists simultaneously. They must maintain a 'carry' integer. At each step, add the values of the two nodes plus the carry, create a new node with the result modulo 10, and update the carry. They must handle edge cases where one list is longer than the other, or if there is a leftover carry at the very end. Target Time Complexity: O(max(M, N)). Target Space Complexity: O(max(M, N)) for the new list."
+	},
+	{
+		"id": 7,
+		"title": "Trapping Rain Water",
+		"difficulty": "Hard",
+		"description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+		"optimalApproach": "While a dynamic programming approach using left_max and right_max arrays is acceptable (O(N) space), the true optimal solution uses Two Pointers. The candidate should maintain left and right pointers at the edges, along with left_max and right_max variables. They move the pointer pointing to the smaller height inward, calculating trapped water on the fly. Target Time Complexity: O(N). Target Space Complexity: O(1)."
+	},
+	{
+		"id": 8,
+		"title": "Median of Two Sorted Arrays",
+		"difficulty": "Hard",
+		"description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).",
+		"optimalApproach": "The candidate must use Binary Search on the smaller of the two arrays to find a valid partition point. The partition must ensure that the left side has the same number of elements as the right side, and the maximum element on the left is less than or equal to the minimum element on the right. Target Time Complexity: O(log(min(M, N))). Target Space Complexity: O(1)."
+	},
+	{
+		"id": 9,
+		"title": "Merge k Sorted Lists",
+		"difficulty": "Hard",
+		"description": "You are given an array of k linked-lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.",
+		"optimalApproach": "The candidate should not merge lists one by one (which is O(N * K)). The optimal approach requires a Min-Heap (Priority Queue) or Divide and Conquer. For the Min-Heap, they insert the head of each list, extract the minimum to add to the result, and insert the next node from that extracted node's list. Target Time Complexity: O(N log K) where N is total nodes and K is the number of lists. Target Space Complexity: O(K) for the heap."
 	}
 ]
