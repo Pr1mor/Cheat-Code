@@ -29,10 +29,10 @@ export default function AudioRecorder() {
                 formData.append("audio", userInput, "interview.webm");
                 try {
                     // Replace URL with Member 3's backend endpoint
-                    // await fetch("http://localhost:8080/api/chats", {
-                    //     method: "POST",
-                    //     body: formData,
-                    // });
+                    await fetch("http://localhost:8080/chats", {
+                        method: "POST",
+                        body: formData,
+                    });
                     const data = await response.json();
 
                     // As soon as the backend sends the URL, it plays!
