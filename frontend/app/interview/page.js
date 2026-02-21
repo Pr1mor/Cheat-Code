@@ -9,34 +9,46 @@ export default function InterviewPage() {
     const difficulty = searchParams.get("difficulty") || "medium";
     const [code, setCode] = useState("// Type your solution here...");
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+            const textarea = e.target;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const newCode = code.substring(0, start) + "    " + code.substring(end);
+            setCode(newCode);
+            // Restore cursor position after the inserted spaces
+            requestAnimationFrame(() => {
+                textarea.selectionStart = start + 4;
+                textarea.selectionEnd = start + 4;
+            });
+        }
+    };
+
     return (
         <main className={styles.container}>
-            {/* Header with Difficulty Info */}
             <header className={styles.header}>
                 <div className={styles.logo}>Cheat<span>Code</span></div>
                 <div className={styles.difficultyBadge}>{difficulty.toUpperCase()} MODE</div>
             </header>
-
             <div className={styles.workspace}>
-                {/* LEFT SIDE: The Code Editor */}
                 <section className={styles.editorContainer}>
                     <div className={styles.editorHeader}>solution</div>
                     <textarea
                         className={styles.editor}
                         value={code}
                         onChange={(e) => setCode(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         spellCheck="false"
+                        autoCorrect="off"
+                        autoCapitalize="off"
                     />
                 </section>
-
-                {/* RIGHT SIDE: The AI Interaction */}
                 <section className={styles.aiPanel}>
                     <div className={styles.aiContent}>
                         <h3>AI Interviewer</h3>
                         <p>Listen to the problem and explain your logic as you type.</p>
                     </div>
-
-                    {/* YOUR VOICE BUTTON LIVES HERE */}
                     <div className={styles.voiceDock}>
                         <AudioRecorder />
                     </div>
