@@ -91,6 +91,7 @@
     background: #161b22;
     padding: 40px;
     justify-content: space-between;
+    overflow-y: auto;
 }
 
 .voiceDock {
@@ -110,7 +111,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #a78bfa;
+    color: #065a84;
 }
 
 .questionBox p {
@@ -122,19 +123,21 @@
 .messages {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     overflow-y: auto;
     flex: 1;
-    padding: 12px;
+    padding: 4px 0;
+    max-height: calc(100vh - 200px);
+
 }
 
 .userMsg {
-    color: #a78bfa;
+    color: #fffdfd;
     font-size: 0.85rem;
 }
 
 .aiMsg {
-    color: #e2e8f0;
+    color: #aef6c7;
     font-size: 0.85rem;
 }
 

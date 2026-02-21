@@ -33,7 +33,7 @@ const GEMINI_PROMPT = `You are a strict senior FAANG software engineer conductin
                         5. When the candidate first greets you, introduce yourself and read them the full problem statement before asking for their approach.`;
 
 const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-flash-lite",
         systemInstruction: GEMINI_PROMPT
     })
 
