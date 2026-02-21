@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import styles from "./AudioRecorder.module.css";
 
-export default function AudioRecorder() {
+export default function AudioRecorder({ onNewMessage }) {
     const [isRecording, setIsRecording] = useState(false);
     const mediaRecorderRef = useRef(null);
     const chunksRef = useRef([]);
@@ -34,6 +34,8 @@ export default function AudioRecorder() {
                         body: formData,
                     });
                     const data = await response.json();
+
+                    onNewMessage(prev => [...prev, {role: "user", text: "Voice Message"}, {role: "ai", text: data.response}]);
 
                     // As soon as the backend sends the URL, it plays!
                     if (data.audio) {

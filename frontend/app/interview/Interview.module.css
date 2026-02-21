@@ -87,3 +87,42 @@
     justify-content: center;
     padding-bottom: 20px;
 }
+
+.questionBox {
+    padding: 16px;
+    background-color: #1a1a2e;
+    border-bottom: 1px solid #333;
+    color: #fff;
+}
+
+.questionBox h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #a78bfa;
+}
+
+.questionBox p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #ccc;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    flex: 1;
+    padding: 12px;
+}
+
+.userMsg {
+    color: #a78bfa;
+    font-size: 0.85rem;
+}
+
+.aiMsg {
+    color: #e2e8f0;
+    font-size: 0.85rem;
+}
