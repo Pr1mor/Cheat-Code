@@ -9,11 +9,11 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
  * Task 2: The Ear
  * Takes a file path from Multer, sends it to Whisper, returns the text.
  */
-async function transcribeAudio(filePath) {
+async function transcribeAudio(fileBuffer, mimeType = "audio/webm") {
 	try {
 		console.log("Transcribing audio...");
 		const transcription = await openai.audio.transcriptions.create({
-			file: fs.createReadStream(filePath),
+			file: new File([fileBuffer], "audio.webm", {type:mimeType}),
 			model: "whisper-1",
 		});
 		return transcription.text;
@@ -68,4 +68,4 @@ async function transcribeAudio(filePath) {
 // }
 
 // Export the functions so Zeel can import them into Interviewer.js
-module.exports = { transcribeAudio, textToSpeech };
+module.exports = { transcribeAudio };
