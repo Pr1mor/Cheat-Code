@@ -5,6 +5,11 @@ import AudioRecorder from "../../components/AudioRecorder";
 import styles from "./Interview.module.css";
 
 export default function InterviewPage() {
+    const difficultyColor = {
+        easy: "#00b8a3",
+        medium: "#ef7306",
+        hard: "#f4220b",
+    };
     const searchParams = useSearchParams();
     const difficulty = searchParams.get("difficulty") || "medium";
     const [code, setCode] = useState("// Type your solution here...");
@@ -14,17 +19,17 @@ export default function InterviewPage() {
     useEffect(() => {
         fetch("http://localhost:8080/start", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ difficulty })
         })
-        .then(res => res.json())
-        .then(data => setQuestion(data.question));
+            .then(res => res.json())
+            .then(data => setQuestion(data.question));
     }, []);
 
     const submitCode = async () => {
         const response = await fetch("http://localhost:8080/submit", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code })
         });
         const data = await response.json();
@@ -65,7 +70,14 @@ export default function InterviewPage() {
         <main className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.logo}>Cheat<span>Code</span></div>
-                <div className={styles.difficultyBadge}>{difficulty.toUpperCase()} MODE</div>
+                <div
+                    className={styles.difficultyBadge}
+                    style={{
+                        backgroundColor: difficultyColor[difficulty.toLowerCase()] || "#238636"
+                    }}
+                >
+                    {difficulty.toUpperCase()} MODE
+                </div>
                 {/* Submit button in header */}
                 <button onClick={submitCode} className={styles.submitBtn}>
                     Submit Solution
@@ -92,7 +104,7 @@ export default function InterviewPage() {
                 </section>
                 <section className={styles.aiPanel}>
                     <div className={styles.aiContent}>
-                        <h3>AI Interviewer</h3>
+                        <h3>Interviewer</h3>
                         <div className={styles.messages}>
                             {messages.map((msg, i) => (
                                 <div key={i} className={msg.role === "user" ? styles.userMsg : styles.aiMsg}>
