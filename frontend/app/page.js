@@ -7,7 +7,7 @@ export default function LandingPage() {
 
   const startInterview = async (difficulty) => {
     try {
-      await fetch("http://localhost:8000/start", {
+      await fetch("http://localhost:8080/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ difficulty }),
@@ -28,19 +28,19 @@ export default function LandingPage() {
       </div>
       <div className={styles.buttonGrid}>
         <button
-          onClick={() => startInterview("easy")}
+          onClick={() => startInterview("Easy")}
           className={`${styles.card} ${styles.easy}`}
         >
           <h2>Easy</h2>
         </button>
         <button
-          onClick={() => startInterview("medium")}
+          onClick={() => startInterview("Medium")}
           className={`${styles.card} ${styles.medium}`}
         >
           <h2>Medium</h2>
         </button>
         <button
-          onClick={() => startInterview("hard")}
+          onClick={() => startInterview("Hard")}
           className={`${styles.card} ${styles.hard}`}
         >
           <h2>Hard</h2>
