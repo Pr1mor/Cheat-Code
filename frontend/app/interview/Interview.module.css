@@ -1,0 +1,85 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #0d1117;
+    color: #c9d1d9;
+}
+
+.header {
+    height: 60px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #30363d;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: white;
+}
+
+.logo span {
+    color: white;
+}
+
+.difficultyBadge {
+    background: #238636;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.workspace {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Editor Styling */
+.editorContainer {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #30363d;
+}
+
+.editorHeader {
+    background: #161b22;
+    padding: 8px 16px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.editor {
+    flex: 1;
+    background: #0d1117;
+    color: #79c0ff;
+    border: none;
+    padding: 20px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 16px;
+    outline: none;
+    resize: none;
+    line-height: 1.5;
+}
+
+/* AI Side Panel */
+.aiPanel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #161b22;
+    padding: 40px;
+    justify-content: space-between;
+}
+
+.voiceDock {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}

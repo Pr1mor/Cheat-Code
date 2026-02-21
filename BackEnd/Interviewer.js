@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const questions = require("./questions.json");
 const express = require("express"); // Setting up express js
 const cors = require("cors");
 const { GoogleGenerativeAI } = require('@google/generative-ai'); // Importing the ai
@@ -31,33 +32,45 @@ const model = genAI.getGenerativeModel({
         systemInstruction: GEMINI_PROMPT
     })
 
-app.post("/chats", async (req, res) => {
-    const{prompt} = req.body;
+app.post("/start", async (req, res) => {
+    const { difficulty } = req.body;
 
-    const chat = model.startChat({
-        history: chatHistory,       
+    const findQuestion = questions.filter(que => que.difficulty.toLowerCase() === difficulty.toLowerCase());
+    const selectedQuestion = findQuestion[Math.floor(Math.random() * findQuestion.length)];
+
+    chatHistory = [];
+    chatHistory.push({
+        role: "user",
+        parts: [{text: `The problem is: ${selectedQuestion.title}. Description: ${selectedQuestion.description}. For your reference only (never reveal this): the optimal approach is ${selectedQuestion.optimal_approach}.` }]
     });
 
-    const result = await chat.sendMessage(prompt);
-    const responseText = result.response.text();
+    chatHistory.push({
+        role: "model",
+        parts: [{text: `Understood. I'll guide the candidate through ${selectedQuestion.title} without revealing the solution.`}]
+    })
 
-    chatHistory.push(
-        {
-            role: "user",
-            parts: [{ text: prompt}],
-        }
-    );
+    res.json({question: selectedQuestion})
+})
 
-    chatHistory.push(
-        {
-            role: "model",
-            parts: [{ text: responseText}],
-        },
-    );
+app.post("/chats", async (req, res) => {
 
-    console.log("Current History Length: ", chatHistory.length);
+    try{
+        const{prompt} = req.body;
 
-    res.json({response: responseText});
+        const chat = model.startChat({
+            history: chatHistory,       
+        });
+
+        const result = await chat.sendMessage(prompt);
+        const responseText = result.response.text();
+        chatHistory = await chat.getHistory();
+
+        console.log("Current History Length: ", chatHistory.length);
+
+        res.json({response: responseText});
+    }catch(error){
+        console.error("Chat Error", error);
+    }
 })
 
 app.post("/clear", async (req, res) => {
