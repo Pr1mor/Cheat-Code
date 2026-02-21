@@ -5,7 +5,16 @@ import styles from "./Home.module.css";
 export default function LandingPage() {
   const router = useRouter();
 
-  const startInterview = (difficulty) => {
+  const startInterview = async (difficulty) => {
+    try {
+      await fetch("http://localhost:8000/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ difficulty }),
+      });
+    } catch (err) {
+      console.error("Failed to send difficulty to server:", err);
+    }
     router.push(`/interview?difficulty=${difficulty}`);
   };
 
