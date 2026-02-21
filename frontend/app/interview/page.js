@@ -81,6 +81,7 @@ export default function InterviewPage() {
                 {/* Submit button in header */}
                 <button onClick={submitCode} className={styles.submitBtn}>
                     Submit Solution
+
                 </button>
             </header>
             <div className={styles.workspace}>
@@ -95,11 +96,12 @@ export default function InterviewPage() {
                     <textarea
                         className={styles.editor}
                         value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        onKeyDown={handleKeyDown}
+                        onChange={(e) => !submitted && setCode(e.target.value)}
+                        onKeyDown={!submitted ? handleKeyDown : undefined}
                         spellCheck="false"
                         autoCorrect="off"
                         autoCapitalize="off"
+                        disabled={submitted}
                     />
                 </section>
                 <section className={styles.aiPanel}>
