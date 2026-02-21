@@ -27,11 +27,22 @@
 }
 
 .difficultyBadge {
-    background: #238636;
     padding: 4px 12px;
     border-radius: 12px;
     font-size: 12px;
     font-weight: bold;
+}
+
+.easy {
+    background: #3df061;
+}
+
+.medium {
+    background: #ed740b;
+}
+
+.hard {
+    background: #f4220b;
 }
 
 .workspace {
@@ -129,7 +140,7 @@
 
 .submitBtn {
     padding: 10px 24px;
-    background-color: #a78bfa;
+    background-color: #4ce13e;
     color: #000;
     border: none;
     border-radius: 6px;
