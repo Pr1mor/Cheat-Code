@@ -35,7 +35,7 @@ const model = genAI.getGenerativeModel({
 app.post("/start", async (req, res) => {
     const { difficulty } = req.body;
 
-    const findQuestion = questions.filter(que => que.difficulty === difficulty);
+    const findQuestion = questions.filter(que => que.difficulty.toLowerCase() === difficulty.toLowerCase());
     const selectedQuestion = findQuestion[Math.floor(Math.random() * findQuestion.length)];
 
     chatHistory = [];
