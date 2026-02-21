@@ -1,0 +1,23 @@
+[
+	{
+		"id": 1,
+		"title": "Two Sum",
+		"difficulty": "Easy",
+		"description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+		"optimal_approach": "Use a Hash Map to store the numbers and their indices. As you iterate, check if (target - current_number) exists in the map. This gives O(n) time complexity."
+	},
+	{
+		"id": 2,
+		"title": "Valid Palindrome",
+		"difficulty": "Easy",
+		"description": "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.",
+		"optimal_approach": "Use two pointers, one at the start and one at the end of the string. Move them towards the center, skipping non-alphanumeric characters, and compare them. O(n) time complexity."
+	},
+	{
+		"id": 3,
+		"title": "Contains Duplicate",
+		"difficulty": "Easy",
+		"description": "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.",
+		"optimal_approach": "Use a Hash Set. Iterate through the array and add elements to the set. If an element is already in the set, return true. O(n) time and O(n) space."
+	}
+]
