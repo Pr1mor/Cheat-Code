@@ -29,7 +29,8 @@ const GEMINI_PROMPT = `You are a strict senior FAANG software engineer conductin
                         1. NEVER give the candidate the raw code or direct answer under any circumstances.
                         2. Evaluate their logic and pseudocode. If they suggest a Brute Force approach, ask them to optimize it.
                         3. Constantly ask for the Time (Big O) and Space complexity of their proposed solution.
-                        4. Keep your responses under 3 sentences to mimic natural speech.`;
+                        4. Keep your responses under 3 sentences to mimic natural speech.
+                        5. When the candidate first greets you, introduce yourself and read them the full problem statement before asking for their approach.`;
 
 const model = genAI.getGenerativeModel({
         model: "gemini-2.5-flash",
@@ -50,7 +51,7 @@ app.post("/start", async (req, res) => {
 
     chatHistory.push({
         role: "model",
-        parts: [{text: `Understood. I'll guide the candidate through ${selectedQuestion.title} without revealing the solution.`}]
+        parts: [{text: `Understood. I will greet the candidate, read them the full problem statement for ${selectedQuestion.title}, and then ask for their approach. And guide them through without directly revealing them the answer.`}]
     })
 
     res.json({question: selectedQuestion})
@@ -77,6 +78,27 @@ app.post("/chats", upload.single("audio"), async (req, res) => {
         res.json({response: responseText, audio: audio64});
     }catch(error){
         console.error("Chat Error", error);
+    }
+})
+
+app.post("/submit", async(req, res) => {
+    try{
+
+        const { code } = req.body;
+        const chat = model.startChat({ history: chatHistory});
+        const result = await chat.sendMessage(
+            `The candidate has submitted their code. Evaluate the logic only, completely ignore syntax errors: \n\n${code}`
+        );
+
+        const responseText = result.response.text();
+        chatHistory = await chat.getHistory();
+
+        const audio64 = await textToSpeech(responseText);
+
+        res.json({ response : responseText, audio: audio64});
+
+    }catch(error){
+        console.error("Error in submitting the code", error);
     }
 })
 
