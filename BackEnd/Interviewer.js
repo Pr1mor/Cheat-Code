@@ -32,32 +32,23 @@ const model = genAI.getGenerativeModel({
     })
 
 app.post("/chats", async (req, res) => {
-    const{prompt} = req.body;
 
-    const chat = model.startChat({
-        history: chatHistory,       
-    });
+    try{
+        const{prompt} = req.body;
 
-    const result = await chat.sendMessage(prompt);
-    const responseText = result.response.text();
+        const chat = model.startChat({
+            history: chatHistory,       
+        });
 
-    chatHistory.push(
-        {
-            role: "user",
-            parts: [{ text: prompt}],
-        }
-    );
+        const result = await chat.sendMessage(prompt);
+        const responseText = result.response.text();
 
-    chatHistory.push(
-        {
-            role: "model",
-            parts: [{ text: responseText}],
-        },
-    );
+        console.log("Current History Length: ", chatHistory.length);
 
-    console.log("Current History Length: ", chatHistory.length);
-
-    res.json({response: responseText});
+        res.json({response: responseText});
+    }catch(error){
+        console.error("Chat Error", error);
+    }
 })
 
 app.post("/clear", async (req, res) => {
