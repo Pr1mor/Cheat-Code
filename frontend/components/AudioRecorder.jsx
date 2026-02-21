@@ -6,7 +6,11 @@ export default function AudioRecorder() {
     const [isRecording, setIsRecording] = useState(false);
     const mediaRecorderRef = useRef(null);
     const chunksRef = useRef([]);
-
+    const playAIResponse = (audioUrl) => {
+        console.log("Attempting to play:", audioUrl);
+        const audio = new Audio(audioUrl);
+        audio.play().catch(e => console.error("Playback failed:", e));
+    };
     const toggleMic = async () => {
         if (isRecording) {
             mediaRecorderRef.current.stop();
@@ -16,27 +20,28 @@ export default function AudioRecorder() {
             const recorder = new MediaRecorder(stream);
             mediaRecorderRef.current = recorder;
             chunksRef.current = [];
-
             recorder.ondataavailable = (e) => chunksRef.current.push(e.data);
-
-
-
             recorder.onstop = async () => {
                 const userInput = new Blob(chunksRef.current, { type: "audio/webm" });
                 console.log("Recorded Audio Blob:", userInput);
                 // Logic for Task 2 (sending to backend) will go here next
                 const formData = new FormData();
-                formData.append("audio", blob, "interview.webm");
-
+                formData.append("audio", userInput, "interview.webm");
                 try {
                     // Replace URL with Member 3's backend endpoint
-                    await fetch("http://localhost:3001/api/interview", {
-                        method: "POST",
-                        body: formData,
-                    });
-                    console.log("Task 2 Success: Audio sent to backend!");
+                    // await fetch("http://localhost:8080/api/chats", {
+                    //     method: "POST",
+                    //     body: formData,
+                    // });
+                    const data = await response.json();
+
+                    // As soon as the backend sends the URL, it plays!
+                    if (data.audioUrl) {
+                        playAIResponse(data.audioUrl);
+                    }
                 } catch (err) {
-                    console.error("Task 2 Failed: Backend unreachable", err);
+                    console.log("Static Test: Backend not found, playing local file instead.");
+                    playAIResponse("/testing.mp3");
                 }
                 stream.getTracks().forEach(t => t.stop());
             };

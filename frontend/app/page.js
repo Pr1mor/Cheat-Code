@@ -1,4 +1,3 @@
-// Notice: NO curly braces around AudioRecorder!
 import AudioRecorder from "../components/AudioRecorder";
 
 export default function Home() {
