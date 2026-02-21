@@ -15,6 +15,8 @@ export default function InterviewPage() {
     const [code, setCode] = useState("// Type your solution here...");
     const [question, setQuestion] = useState(null);
     const [messages, setMessages] = useState([]);
+    const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         fetch("http://localhost:8080/start", {
@@ -27,13 +29,15 @@ export default function InterviewPage() {
     }, []);
 
     const submitCode = async () => {
+        setIsSubmitting(true);
+        setSubmitted(true);
         const response = await fetch("http://localhost:8080/submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code })
         });
         const data = await response.json();
-
+        setIsSubmitting(false);
         // Show feedback in conversation panel
         setMessages(prev => [
             ...prev,
@@ -79,9 +83,9 @@ export default function InterviewPage() {
                     {difficulty.toUpperCase()} MODE
                 </div>
                 {/* Submit button in header */}
-                <button onClick={submitCode} className={styles.submitBtn}>
-                    Submit Solution
-
+                <button onClick={submitCode} className={styles.submitBtn} disabled={submitted || isSubmitting}>
+                    {isSubmitting ? "Reviewing.." : submitted ? "Submitted" : "Submit Solution"}
+                    
                 </button>
             </header>
             <div className={styles.workspace}>
