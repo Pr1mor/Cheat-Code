@@ -5,6 +5,10 @@ const express = require("express"); // Setting up express js
 const cors = require("cors");
 const { GoogleGenerativeAI } = require('@google/generative-ai'); // Importing the ai
 const app = express();
+const multer = require("multer");
+const { transcribeAudio } = require("./audioServices");
+
+const upload = multer({storage: multer.memoryStorage()});
 
 // Making sure that the express variable can parse json questions and be able to easily open up in the localhost
 app.use(express.json());
@@ -52,20 +56,21 @@ app.post("/start", async (req, res) => {
     res.json({question: selectedQuestion})
 })
 
-app.post("/chats", async (req, res) => {
+app.post("/chats", upload.single("audio"), async (req, res) => {
 
     try{
-        const{prompt} = req.body;
 
+        const transcribeText = await transcribeAudio(req.file.buffer, req.file.mimetype);
         const chat = model.startChat({
             history: chatHistory,       
         });
 
-        const result = await chat.sendMessage(prompt);
+        const result = await chat.sendMessage(transcribeText);
         const responseText = result.response.text();
         chatHistory = await chat.getHistory();
 
-        console.log("Current History Length: ", chatHistory.length);
+        console.log("User said:", transcribeText);
+        console.log("Gemini replied:", responseText);
 
         res.json({response: responseText});
     }catch(error){
