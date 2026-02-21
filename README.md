@@ -2,7 +2,7 @@
 
 ## Members
 
-Priyal
-Pratham
-Zeel
-Noor
+- Priyal
+- Pratham
+- Zeel
+- Noor
