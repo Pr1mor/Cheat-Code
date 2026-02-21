@@ -110,7 +110,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #a78bfa;
+    color: #065a84;
 }
 
 .questionBox p {
@@ -129,12 +129,12 @@
 }
 
 .userMsg {
-    color: #a78bfa;
+    color: #fffdfd;
     font-size: 0.85rem;
 }
 
 .aiMsg {
-    color: #e2e8f0;
+    color: #aef6c7;
     font-size: 0.85rem;
 }
 
