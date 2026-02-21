@@ -52,11 +52,13 @@ export default function AudioRecorder() {
     };
 
     return (
-        <button
-            onClick={toggleMic}
-            className={`${styles.btn} ${isRecording ? styles.recording : ""}`}
-        >
-            {isRecording ? <div className={styles.stopIcon} /> : "🎤"}
-        </button>
+        <div className={styles.container}>
+            <button
+                onClick={toggleMic}
+                className={`${styles.btn} ${isRecording ? styles.recording : ""}`}
+            >
+                {isRecording ? <div className={styles.stopIcon} /> : "🎤"}
+            </button>
+        </div >
     );
 }

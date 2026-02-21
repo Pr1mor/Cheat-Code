@@ -1,3 +1,14 @@
+.container {
+    position: fixed;
+    right: 20px;
+    /* Distance from right side */
+    top: 90%;
+    /* Center it vertically */
+    transform: translateY(-50%);
+    z-index: 1000;
+    /* Make sure it stays on top of everything */
+}
+
 .btn {
     width: 60px;
     height: 60px;
