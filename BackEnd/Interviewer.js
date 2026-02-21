@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const questions = require("./questions.json");
 const express = require("express"); // Setting up express js
 const cors = require("cors");
 const { GoogleGenerativeAI } = require('@google/generative-ai'); // Importing the ai
@@ -31,6 +32,26 @@ const model = genAI.getGenerativeModel({
         systemInstruction: GEMINI_PROMPT
     })
 
+app.post("/start", async (req, res) => {
+    const { difficulty } = req.body;
+
+    const findQuestion = questions.filter(que => que.difficulty === difficulty);
+    const selectedQuestion = findQuestion[Math.floor(Math.random() * findQuestion.length)];
+
+    chatHistory = [];
+    chatHistory.push({
+        role: "user",
+        parts: [{text: `The problem is: ${selectedQuestion.title}. Description: ${selectedQuestion.description}. For your reference only (never reveal this): the optimal approach is ${selectedQuestion.optimal_approach}.` }]
+    });
+
+    chatHistory.push({
+        role: "model",
+        parts: [{text: `Understood. I'll guide the candidate through ${selectedQuestion.title} without revealing the solution.`}]
+    })
+
+    res.json({question: selectedQuestion})
+})
+
 app.post("/chats", async (req, res) => {
 
     try{
@@ -42,6 +63,7 @@ app.post("/chats", async (req, res) => {
 
         const result = await chat.sendMessage(prompt);
         const responseText = result.response.text();
+        chatHistory = await chat.getHistory();
 
         console.log("Current History Length: ", chatHistory.length);
 
