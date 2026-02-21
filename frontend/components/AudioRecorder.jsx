@@ -29,15 +29,19 @@ export default function AudioRecorder() {
                 formData.append("audio", userInput, "interview.webm");
                 try {
                     // Replace URL with Member 3's backend endpoint
-                    await fetch("http://localhost:8080/chats", {
+                    const response = await fetch("http://localhost:8080/chats", {
                         method: "POST",
                         body: formData,
                     });
                     const data = await response.json();
 
                     // As soon as the backend sends the URL, it plays!
-                    if (data.audioUrl) {
-                        playAIResponse(data.audioUrl);
+                    if (data.audio) {
+                        const audioBlob = new Blob([
+                            Uint8Array.from(atob(data.audio), c => c.charCodeAt(0))
+                        ], {type: "audio/mpeg"});
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        new Audio(audioUrl).play();
                     }
                 } catch (err) {
                     console.log("Static Test: Backend not found, playing local file instead.");

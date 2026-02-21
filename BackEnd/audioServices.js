@@ -68,4 +68,4 @@ async function textToSpeech(text) {
 }
 
 // Export the functions so Zeel can import them into Interviewer.js
-module.exports = { transcribeAudio };
+module.exports = { transcribeAudio , textToSpeech};

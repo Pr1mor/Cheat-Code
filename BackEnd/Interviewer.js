@@ -6,7 +6,7 @@ const cors = require("cors");
 const { GoogleGenerativeAI } = require('@google/generative-ai'); // Importing the ai
 const app = express();
 const multer = require("multer");
-const { transcribeAudio } = require("./audioServices");
+const { transcribeAudio, textToSpeech } = require("./audioServices");
 
 const upload = multer({storage: multer.memoryStorage()});
 
@@ -69,10 +69,12 @@ app.post("/chats", upload.single("audio"), async (req, res) => {
         const responseText = result.response.text();
         chatHistory = await chat.getHistory();
 
+        const audio64 = await textToSpeech(responseText);
+
         console.log("User said:", transcribeText);
         console.log("Gemini replied:", responseText);
 
-        res.json({response: responseText});
+        res.json({response: responseText, audio: audio64});
     }catch(error){
         console.error("Chat Error", error);
     }
