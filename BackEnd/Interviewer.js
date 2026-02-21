@@ -81,6 +81,27 @@ app.post("/chats", upload.single("audio"), async (req, res) => {
     }
 })
 
+app.post("/submit", async(req, res) => {
+    try{
+
+        const { code } = req.body;
+        const chat = model.startChat({ history: chatHistory});
+        const result = await chat.sendMessage(
+            `The candidate has submitted their code. Evaluate the logic only, completely ignore syntax errors: \n\n${code}`
+        );
+
+        const responseText = result.response.text();
+        chatHistory = await chat.getHistory();
+
+        const audio64 = await textToSpeech(responseText);
+
+        res.json({ response : responseText, audio: audio64});
+
+    }catch(error){
+        console.error("Error in submitting the code", error);
+    }
+})
+
 app.post("/clear", async (req, res) => {
     chatHistory = [];
     res.json({response : "cleared"})
